@@ -7,15 +7,15 @@ public class TestController : MonoBehaviour {
 
     public Text text;
 
-    private enum States { cell, mirror, sheets_0, lock_0, cell_mirror, sheets_1, lock_1, corridor_0, yard, hole };
-    private States myState; // stores a state from the above
+    public enum States { cell, mirror, sheets_0, lock_0, cell_mirror, sheets_1, lock_1, corridor_0, yard, hole };
+    public States myState; // stores a state from the above
 
 
 	// Use this for initialization of the current state
 	void Start () {
         myState = States.cell;
 	}
-	
+
 	// Update is used to sense the state and then call the corresponding method (repeatedly though)
 	void Update () {
         print(myState);
@@ -33,6 +33,7 @@ public class TestController : MonoBehaviour {
         else if (myState == States.hole) { hole(); }
 	}
 
+    #region State Handler methods
     void cell() {//hold text and handle key presses
         text.text = "You are in a prison cell, and you want to escape. There are " +
                 "some dirty sheets on the bed, a mirror on the wall, and the door " +
@@ -109,6 +110,20 @@ public class TestController : MonoBehaviour {
         text.text = "You're free!\n\n" +
             "Press P to Play again.";
         if      (Input.GetKeyDown(KeyCode.P)) { myState = States.cell; }
+    }
+
+    #endregion
+
+    /*
+    I need to move the body to the different game object transforms
+    I may just make myState public and have a different script access it. Based on certain scripts, that's when we change the lerping position.
+    */
+
+    public bool SameStateAs(string comp) {
+        if (comp.Equals(myState.ToString())) {
+            return true;
+        }
+        return false;
     }
 
 }
