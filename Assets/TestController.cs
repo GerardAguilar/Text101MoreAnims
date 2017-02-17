@@ -126,4 +126,8 @@ public class TestController : MonoBehaviour {
         return false;
     }
 
+    public string CurrentState() {
+        return myState.ToString();
+    }
+
 }
